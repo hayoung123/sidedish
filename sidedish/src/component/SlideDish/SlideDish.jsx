@@ -11,14 +11,14 @@ const SlideDish = ({ category }) => {
     slideData &&
     slideData.body.map((item) => <DishItem key={item.detail_hash} item={item} size="M" />);
   const [slidePos, setSlidePos] = useState(0);
-  // const [arrowState, setArrowState] = useState(true)
+  const [contentsCnt, setContentsCnt] = useState(4);
+  const itemSize = 324;
 
   const handleRightClick = () => {
-    setSlidePos(slidePos - 324);
+    if (slidePos > -(itemSize * contentsCnt)) setSlidePos(slidePos - itemSize * contentsCnt);
   };
   const handleLeftClick = () => {
-    if (slidePos) setSlidePos(slidePos + 324);
-    // else setArrowState(false);
+    if (slidePos) setSlidePos(slidePos + itemSize * contentsCnt);
   };
 
   return loading ? (
