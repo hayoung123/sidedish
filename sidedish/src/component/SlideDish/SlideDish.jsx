@@ -11,14 +11,14 @@ const SlideDish = ({ category }) => {
     slideData &&
     slideData.body.map((item) => <DishItem key={item.detail_hash} item={item} size="M" />);
   const [slidePos, setSlidePos] = useState(0);
+  // const [arrowState, setArrowState] = useState(true)
 
   const handleRightClick = () => {
-    console.log('right');
-    setSlidePos(slidePos + 324);
+    setSlidePos(slidePos - 324);
   };
   const handleLeftClick = () => {
-    console.log('left');
-    setSlidePos(slidePos - 324);
+    if (slidePos) setSlidePos(slidePos + 324);
+    // else setArrowState(false);
   };
 
   return loading ? (
@@ -26,13 +26,13 @@ const SlideDish = ({ category }) => {
   ) : (
     <SlideContainer>
       <Header>모두가 좋아하는 든든한 메인요리</Header>
-      <StyledSlideList>
-        <Slide slidePos={slidePos}>{slideCategory}</Slide>
-      </StyledSlideList>
-      <SlideArrow>
+      <SlideWrapper>
         <IoChevronBackSharp className="leftArrow" onClick={handleLeftClick} />
+        <StyledSlideList>
+          <Slide slidePos={slidePos}>{slideCategory}</Slide>
+        </StyledSlideList>
         <IoChevronForwardSharp className="rightArrow" onClick={handleRightClick} />
-      </SlideArrow>
+      </SlideWrapper>
     </SlideContainer>
   );
 };
@@ -46,7 +46,30 @@ const Slide = styled.div`
 
 const SlideContainer = styled.div`
   min-width: 1280px;
+  display: flex;
+  flex-direction: column;
   position: relative;
+`;
+
+const SlideWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  .leftArrow {
+    position: absolute;
+    left: -2rem;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+  }
+
+  .rightArrow {
+    position: absolute;
+    left: 101%;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+  }
 `;
 
 const Header = styled.div`
@@ -61,23 +84,4 @@ const StyledSlideList = styled.div`
   display: flex;
   min-width: 1280px;
   overflow: hidden;
-`;
-
-const SlideArrow = styled.div`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  top: 0;
-  left: -4%;
-  width: 108%;
-  height: 100%;
-  font-size: 1.2rem;
-  /* z-index: -1; */
-  .leftArrow {
-    //속성으로 색깔비교
-  }
-  .rightArrow {
-    //속성으로 색깔비교
-  }
 `;
