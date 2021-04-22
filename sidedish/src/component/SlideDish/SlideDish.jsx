@@ -10,22 +10,39 @@ const SlideDish = ({ category }) => {
   const slideCategory =
     slideData &&
     slideData.body.map((item) => <DishItem key={item.detail_hash} item={item} size="M" />);
+  const [slidePos, setSlidePos] = useState(0);
+
+  const handleRightClick = () => {
+    console.log('right');
+    setSlidePos(slidePos + 324);
+  };
+  const handleLeftClick = () => {
+    console.log('left');
+    setSlidePos(slidePos - 324);
+  };
 
   return loading ? (
     <div>Loading...</div>
   ) : (
     <SlideContainer>
       <Header>모두가 좋아하는 든든한 메인요리</Header>
-      <StyledSlideList>{slideCategory}</StyledSlideList>
+      <StyledSlideList>
+        <Slide slidePos={slidePos}>{slideCategory}</Slide>
+      </StyledSlideList>
       <SlideArrow>
-        <IoChevronBackSharp className="leftArrow" />
-        <IoChevronForwardSharp className="rightArrow" />
+        <IoChevronBackSharp className="leftArrow" onClick={handleLeftClick} />
+        <IoChevronForwardSharp className="rightArrow" onClick={handleRightClick} />
       </SlideArrow>
     </SlideContainer>
   );
 };
 
 export default SlideDish;
+
+const Slide = styled.div`
+  display: flex;
+  transform: ${(props) => `translateX(${props.slidePos}px)`};
+`;
 
 const SlideContainer = styled.div`
   min-width: 1280px;
@@ -56,7 +73,7 @@ const SlideArrow = styled.div`
   width: 108%;
   height: 100%;
   font-size: 1.2rem;
-  z-index: -1;
+  /* z-index: -1; */
   .leftArrow {
     //속성으로 색깔비교
   }
