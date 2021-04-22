@@ -11,14 +11,15 @@ const SlideDish = ({ category }) => {
     slideData &&
     slideData.body.map((item) => <DishItem key={item.detail_hash} item={item} size="M" />);
   const [slidePos, setSlidePos] = useState(0);
-  const [contentsCnt, setContentsCnt] = useState(4);
+  const contentsCnt = 4;
   const itemSize = 324;
+  const slideSequence = itemSize * contentsCnt;
 
   const handleRightClick = () => {
-    if (slidePos > -(itemSize * contentsCnt)) setSlidePos(slidePos - itemSize * contentsCnt);
+    if (slidePos > -slideSequence) setSlidePos(slidePos - slideSequence);
   };
   const handleLeftClick = () => {
-    if (slidePos) setSlidePos(slidePos + itemSize * contentsCnt);
+    if (slidePos) setSlidePos(slidePos + slideSequence);
   };
 
   return loading ? (
@@ -35,7 +36,7 @@ const SlideDish = ({ category }) => {
           <Slide slidePos={slidePos}>{slideCategory}</Slide>
         </StyledSlideList>
         <IoChevronForwardSharp
-          className={slidePos <= -(itemSize * contentsCnt) ? 'disable rightArrow' : 'rightArrow'}
+          className={slidePos <= -slideSequence ? 'disable rightArrow' : 'rightArrow'}
           onClick={handleRightClick}
           slidePos={slidePos}
         />
