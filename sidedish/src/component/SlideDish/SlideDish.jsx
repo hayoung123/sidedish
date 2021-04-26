@@ -18,11 +18,8 @@ const SlideDish = ({ category }) => {
     <SlideContainer>
       <Header>모두가 좋아하는 든든한 메인요리</Header>
       <Carousel
-        itemWidth={324}
-        maxItem={4}
-        skipItem={3}
-        animationTime={0.5}
-        lassName="carouselWrapper"
+        options={{ itemWidth: 324, maxItem: 4, skipItem: 1, animationTime: 0.5, arrow: true }}
+        className="carouselWrapper"
       >
         {slideCategory}
       </Carousel>
@@ -37,6 +34,17 @@ const SlideContainer = styled.div`
   position: relative;
   .carouselWrapper {
     min-width: 1280px;
+  }
+  .arrow {
+    position: absolute;
+    font-size: 2rem;
+    top: 40%;
+  }
+  .leftArrow {
+    left: -50px;
+  }
+  .rightArrow {
+    right: -50px;
   }
 `;
 
