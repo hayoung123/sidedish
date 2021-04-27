@@ -1,35 +1,31 @@
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { IoChevronBackSharp, IoChevronForwardSharp } from 'react-icons/io5';
+// import { IoChevronBackSharp, IoChevronForwardSharp } from 'react-icons/io5';
 
 const Carousel = forwardRef(({ children, itemWidth, maxItem, skipItem, animationTime }, ref) => {
   const [locationX, setLocationX] = useState(0);
   const [currIdx, setCurrIdx] = useState(0);
   const [leftItem, setLeftItem] = useState();
 
-  const handleClickPrev = () => {
-    const possibleMove = currIdx >= skipItem ? skipItem : currIdx;
-    setLocationX(locationX + itemWidth * possibleMove);
-    setCurrIdx(currIdx - possibleMove);
-    setLeftItem(leftItem + possibleMove);
-  };
-
-  const handleClickNext = () => {
-    const totalItemCount = children.length;
-    const newLeftItem = totalItemCount - (currIdx + maxItem);
-    const possibleMove = newLeftItem >= skipItem ? skipItem : newLeftItem;
-    setLocationX(locationX - itemWidth * possibleMove);
-    setCurrIdx(currIdx + possibleMove);
-    setLeftItem(newLeftItem - possibleMove);
-  };
-
   useImperativeHandle(
     ref,
     () => ({
-      handleClickPrev,
-      handleClickNext,
+      handleClickNext() {
+        const totalItemCount = children.length;
+        const newLeftItem = totalItemCount - (currIdx + maxItem);
+        const possibleMove = newLeftItem >= skipItem ? skipItem : newLeftItem;
+        setLocationX(locationX - itemWidth * possibleMove);
+        setCurrIdx(currIdx + possibleMove);
+        setLeftItem(newLeftItem - possibleMove);
+      },
+      handleClickPrev() {
+        const possibleMove = currIdx >= skipItem ? skipItem : currIdx;
+        setLocationX(locationX + itemWidth * possibleMove);
+        setCurrIdx(currIdx - possibleMove);
+        setLeftItem(leftItem + possibleMove);
+      },
     }),
-    [handleClickPrev, handleClickNext]
+    [children.length, currIdx, itemWidth, leftItem, locationX, maxItem, skipItem]
   );
 
   return (
@@ -50,7 +46,7 @@ const Carousel = forwardRef(({ children, itemWidth, maxItem, skipItem, animation
 
 export default Carousel;
 
-export const StyledCarousel = styled.div`
+const StyledCarousel = styled.div`
   position: relative;
 
   .carouselWrapper {
