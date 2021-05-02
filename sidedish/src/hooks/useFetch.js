@@ -23,9 +23,11 @@ const useFetch = ({ url, parse, target = [], initEffect = [] }) => {
   }, [...target]);
 
   useEffect(() => {
-    initEffect.forEach((fn) => {
-      if (data) fn(data);
-    });
+    if (data) {
+      initEffect.forEach((fn) => {
+        fn(data);
+      });
+    }
   }, [data]);
 
   return { data, loading, error };

@@ -6,7 +6,7 @@ const CarouselItem = ({ item, idx, setItemWidth, marginRigthForItem }) => {
 
   useEffect(() => {
     if (idx === 0) setItemWidth(childRef.current.offsetWidth);
-  }, []);
+  }, [idx]);
 
   return (
     <StyledCarouselItem ref={childRef} marginRigthForItem={marginRigthForItem}>
